@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Elegant Font Pairing: Playfair Display (Headers) & Outfit (Body) -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <title>CozyCup Café | Dark Aesthetic</title>
+    
+    <style>
+        /* --- DARK AESTHETIC COLOR PALETTE --- */
+        :root {
+            --bg-base: #141210; /* Deep Espresso / Almost Black */
+            --bg-card: #221E1B; /* Dark Charcoal Roast */
+            --text-dark: #FDFBF7; /* Soft Oat (Used as main text now) */
+            --text-muted: #AFA499; /* Warm Muted Ash */
+            --accent-primary: #D4A373; /* Brightened Caramel so it pops on dark */
+            --accent-light: #3A322C; /* Subtle Dark Border */
+            --glass-bg: rgba(20, 18, 16, 0.85); /* Dark Glass */
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* --- GLOBAL STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .cafe {
+            font-family: 'Playfair Display', serif;
+            color: var(--text-dark);
+        }
+
+        /* --- FLOATING NAVIGATION --- */
+        header {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1200px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: var(--transition);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 2.5rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo img {
+            height: 35px;
+            border-radius: 50%;
+        }
+
+        .cafe {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin: 0;
+        }
+
+        ul#navMenu {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        ul#navMenu a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            font-weight: 500;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        ul#navMenu a::after {
+            content: '';
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%) scale(0);
+            background-color: var(--accent-primary);
+            transition: var(--transition);
+        }
+
+        ul#navMenu a:hover::after {
+            transform: translateX(-50%) scale(1);
+        }
+
+        ul#navMenu a:hover {
+            color: var(--accent-primary);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .hamburger span {
+            width: 28px;
+            height: 2px;
+            background-color: var(--text-dark);
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: url('img/background.jpg') center/cover no-repeat;
+            background-color: var(--bg-card); /* Fallback */
+            padding-top: 80px;
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(20, 18, 16, 0.6), rgba(20, 18, 16, 1));
+        }
+
+        .hero-text {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: #fff;
+            max-width: 700px;
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 30px;
+            animation: floatUp 1.2s ease-out forwards;
+        }
+
+        .hero-text h1 {
+            font-size: 4.5rem;
+            line-height: 1.1;
+            color: #fff;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .hero-text h1 i {
+            color: var(--accent-primary);
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 16px 40px;
+            background-color: var(--accent-primary);
+            color: var(--bg-base);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: var(--transition);
+        }
+
+        .cta-button:hover {
+            background-color: var(--text-dark);
+            color: var(--bg-base);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(212, 163, 115, 0.2);
+        }
+
+        /* --- MENU SECTION --- */
+        .menu {
+            padding: 8rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .section-header {
+            margin-bottom: 4rem;
+        }
+
+        .menu h2, .about h2, .contact h2 {
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--accent-primary);
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 500;
+        }
+
+        .menu-category {
+            margin-bottom: 5rem;
+            text-align: left;
+        }
+
+        .menu-category h3 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .menu-category h3::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--accent-light);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .menu-item {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            transition: var(--transition);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            position: relative;
+            top: 0;
+        }
+
+        .menu-item:hover {
+            top: -15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            border-color: var(--accent-primary);
+        }
+
+        .menu-item-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 100px 100px 15px 15px; 
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+            opacity: 0.9; /* Slight dimming for dark mode */
+        }
+
+        .menu-item:hover .menu-item-image {
+            transform: scale(1.03);
+            opacity: 1;
+        }
+
+        .menu-item h4 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-item p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .price {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--accent-primary);
+            font-size: 1.4rem;
+            display: block;
+        }
+
+        /* --- ABOUT SECTION --- */
+        .about {
+            background-color: var(--bg-card);
+            padding: 8rem 5%;
+            border-radius: 40px;
+            max-width: 1300px;
+            margin: 0 auto 5rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.02);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+
+        .about-text h3 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .feature-item {
+            background: var(--bg-base);
+            padding: 2rem 1.5rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid var(--accent-light);
+        }
+
+        .feature-item:hover {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            transform: translateY(-5px);
+        }
+
+        .feature-item h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .feature-item p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin: 0;
+            transition: var(--transition);
+        }
+
+        .feature-item:hover h4, .feature-item:hover p {
+            color: var(--bg-base);
+        }
+
+        /* --- CONTACT & AUTHOR SECTION --- */
+        .contact {
+            padding: 5rem 5% 8rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+            text-align: left;
+        }
+
+        .contact-info, .authors-section {
+            background: var(--bg-card);
+            padding: 3rem;
+            border-radius: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.02);
+        }
+
+        .contact-info::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: var(--accent-light);
+            border-radius: 50%;
+            z-index: 0;
+            opacity: 0.3;
+        }
+
+        .contact-info h3, .authors-section h3, .contact-info p, .authors-grid {
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-info h3, .authors-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-info p {
+            margin-bottom: 1.2rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.05rem;
+        }
+
+        .authors-grid {
+            display: flex;
+            justify-content: center;
+        }
+
+        .author-card {
+            text-align: center;
+        }
+
+        .author-image {
+            width: 140px;
+            height: 140px;
+            border-radius: 40px; 
+            object-fit: cover;
+            border: 2px solid var(--accent-light);
+            padding: 5px;
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .author-card:hover .author-image {
+            transform: scale(1.05) rotate(5deg);
+            border-color: var(--accent-primary);
+        }
+
+        .author-card h4 {
+            font-size: 1.5rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .author-email {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        /* Palitan ang dating filter na ito */
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            transition: var(--transition);
+            /* DITO NATIN AAYUSIN: Alisin o baguhin ang filter */
+        }
+
+        /* Siguraduhing hindi ito nakakaapekto sa kulay */
+        .social-links a:hover .social-icon {
+            transform: translateY(-3px);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: #0A0908;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 3rem 2rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            border-top: 1px solid var(--accent-light);
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes floatUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 900px) {
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                width: 100%;
+                top: 0;
+                border-radius: 0;
+                border: none;
+                border-bottom: 1px solid rgba(255,255,255,0.05);
+            }
+
+            ul#navMenu {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: var(--glass-bg);
+                backdrop-filter: blur(15px);
+                text-align: center;
+                padding: 2rem 0;
+                box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(-20px);
+                transition: var(--transition);
+            }
+
+            ul#navMenu.active {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 6px);
+            }
+
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -6px);
+            }
+
+            .hero-text h1 {
+                font-size: 3rem;
+            }
+
+            .hero-text {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="img/logo.png" alt="CozyCup Logo" onerror="this.src='https://via.placeholder.com/40x40/D4A373/221E1B?text=C'">
+                <p class="cafe">CozyCup</p>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul id="navMenu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="overlay"></div>
+        <div class="hero-text">
+            <h1>Sip the <i>Aesthetic</i>,<br>Taste the Love.</h1>
+            <p>Your minimalist haven for handcrafted brews and artisanal pastries. Settle in, slow down, and enjoy every sip.</p>
+            <a href="#menu" class="cta-button">View Our Menu</a>
+        </div>
+    </section>
+
+    <section id="menu" class="menu">
+        <div class="section-header">
+            <h2>Artisanal Menu</h2>
+            <p class="subtitle">Carefully Crafted</p>
+        </div>
+        
+        <div class="menu-category">
+            <h3>Signature Brews</h3>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <img src="img/espresso.jpg" alt="Espresso" class="menu-item-image" onerror="this.src='https://via.placeholder.com/300x400/221E1B/D4A373?text=Espresso'">
+                    <h4>Classic Espresso</h4>
+                    <p>Rich, bold, and unapologetically pure.</p>
+                    <span class="price">₱120</span>
+                </div>
+                <div class="menu-item">
+                    <img src="img/cappuccino.jpg" alt="Cappuccino" class="menu-item-image" onerror="this.src='https://via.placeholder.com/300x400/221E1B/D4A373?text=Cappuccino'">
+                    <h4>Velvet Cappuccino</h4>
+                    <p>Perfectly balanced with silky microfoam.</p>
+                    <span class="price">₱150</span>
+                </div>
+                <div class="menu-item">
+                    <img src="img/caramel-latte.jpg" alt="Caramel Latte" class="menu-item-image" onerror="this.src='https://via.placeholder.com/300x400/221E1B/D4A373?text=Latte'">
+                    <h4>Salted Caramel Latte</h4>
+                    <p>A warm hug of sweet and savory notes.</p>
+                    <span class="price">₱170</span>
+                </div>
+                <div class="menu-item">
+                    <img src="img/iced-mocha.jpg" alt="Iced Mocha" class="menu-item-image" onerror="this.src='https://via.placeholder.com/300x400/221E1B/D4A373?text=Mocha'">
+                    <h4>Dark Iced Mocha</h4>
+                    <p>Premium cocoa poured over ice.</p>
+                    <span class="price">₱160</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-category">
+            <h3>Fresh Bakes</h3>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <img src="img/croissant.jpg" alt="Croissant" class="menu-item-image" onerror="this.src='https://via.placeholder.com/300x400/221E1B/D4A373?text=Croissant'">
+                    <h4>Butter Croissant</h4>
+                    <p>Flaky layers of golden perfection.</p>
+                    <span class="price">₱95</span>
+                </div>
+                <div class="menu-item">
+                    <img src="img/chocolate-muffin.jpg" alt="Muffin" class="menu-item-image" onerror="this.src='https://via.placeholder.com/300x400/221E1B/D4A373?text=Muffin'">
+                    <h4>Double Choc Muffin</h4>
+                    <p>Decadent and moist, baked fresh daily.</p>
+                    <span class="price">₱85</span>
+                </div>
+                <div class="menu-item">
+                    <img src="img/cinnamon-roll.jpg" alt="Cinnamon Roll" class="menu-item-image" onerror="this.src='https://via.placeholder.com/300x400/221E1B/D4A373?text=Cinnamon'">
+                    <h4>Glazed Cinnamon Roll</h4>
+                    <p>Warm spices with rich cream cheese.</p>
+                    <span class="price">₱110</span>
+                </div>
+                <div class="menu-item">
+                    <img src="img/blueberry-scone.jpg" alt="Scone" class="menu-item-image" onerror="this.src='https://via.placeholder.com/300x400/221E1B/D4A373?text=Scone'">
+                    <h4>Wild Blueberry Scone</h4>
+                    <p>Crumbly exterior, soft fruity core.</p>
+                    <span class="price">₱100</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-category">
+            <h3>Artisan Pasta</h3>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <img src="img/carbonara.jpg" alt="Carbonara" class="menu-item-image" onerror="this.src='https://via.placeholder.com/300x400/221E1B/D4A373?text=Carbonara'">
+                    <h4>Truffle Carbonara</h4>
+                    <p>Creamy, earthy, topped with smoked bacon.</p>
+                    <span class="price">₱220</span>
+                </div>
+                <div class="menu-item">
+                    <img src="img/aglio-e-olio.jpg" alt="Aglio e Olio" class="menu-item-image" onerror="this.src='https://via.placeholder.com/300x400/221E1B/D4A373?text=Aglio'">
+                    <h4>Classic Aglio e Olio</h4>
+                    <p>Roasted garlic, olive oil, and a hint of chili.</p>
+                    <span class="price">₱200</span>
+                </div>
+                <div class="menu-item">
+                    <img src="img/pesto-pasta.jpg" alt="Pesto Pasta" class="menu-item-image" onerror="this.src='https://via.placeholder.com/300x400/221E1B/D4A373?text=Pesto'">
+                    <h4>Basil Pesto</h4>
+                    <p>Fresh herbs blended with parmesan.</p>
+                    <span class="price">₱230</span>
+                </div>
+                <div class="menu-item">
+                    <img src="img/seafood-marinara.jpg" alt="Marinara" class="menu-item-image" onerror="this.src='https://via.placeholder.com/300x400/221E1B/D4A373?text=Marinara'">
+                    <h4>Seafood Marinara</h4>
+                    <p>Rich tomato ragu with fresh ocean catch.</p>
+                    <span class="price">₱280</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="section-header" style="text-align: center;">
+            <h2>The CozyCup Story</h2>
+            <p class="subtitle">More Than Just Coffee</p>
+        </div>
+        <div class="about-content">
+            <div class="about-text">
+                <h3>Our Philosophy</h3>
+                <p>We believe that coffee is an art form. At CozyCup Café, we've stripped away the noise to focus on what truly matters: exceptional beans, masterful brewing, and an environment that feels like a deep breath.</p>
+                <p>Every corner of our aesthetic space is designed for your comfort. Whether you're here to find inspiration, dive into a good book, or share a quiet moment, we provide the perfect canvas for your day.</p>
+            </div>
+            <div class="about-features">
+                <div class="feature-item">
+                    <h4>Ethical Beans</h4>
+                    <p>Sourced responsibly</p>
+                </div>
+                <div class="feature-item">
+                    <h4>Daily Bakes</h4>
+                    <p>From oven to table</p>
+                </div>
+                <div class="feature-item">
+                    <h4>Slow Living</h4>
+                    <p>A mindful space</p>
+                </div>
+                <div class="feature-item">
+                    <h4>Local Art</h4>
+                    <p>Supporting creators</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="section-header">
+            <h2>Let's Connect</h2>
+            <p class="subtitle">Drop by or say hello</p>
+        </div>
+        
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h3>Visit The Café</h3>
+                <p>📍 123 Minimalist Avenue, Cozy District</p>
+                <p>📞 +63 123 456 7890</p>
+                <p>📧 hello@cozycup.com</p>
+                <p>🕐 Mon-Sun | 7:00 AM - 10:00 PM</p>
+            </div>
+            
+            <div class="authors-section">
+                <h3>The Visionary</h3>
+                <div class="authors-grid">
+                    <div class="author-card">
+                        <img src="img/picture.png" alt="Cyver Kate Mahinay" class="author-image" onerror="this.src='https://via.placeholder.com/140x140/221E1B/D4A373?text=CKM'">
+                        <h4>Vincii  </h4>
+                        <p class="author-email">cozy-cup@gmail.com</p>
+                        <div class="social-links">
+                            <a href="#" target="_blank" title="Facebook">
+                                <img src="img/Facebook.png" alt="Facebook" class="social-icon" onerror="this.src='https://cdn-icons-png.flaticon.com/512/20/20837.png'">
+                            </a>
+                            <a href="#" target="_blank" title="GitHub">
+                                <img src="img/Github.png" alt="GitHub" class="social-icon" onerror="this.src='https://cdn-icons-png.flaticon.com/512/25/25231.png'">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Est. 2026 &nbsp;&mdash;&nbsp; CozyCup Café &nbsp;&mdash;&nbsp; All rights reserved.</p>
+    </footer>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+        const navLinks = navMenu.querySelectorAll('a');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
